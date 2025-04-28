@@ -22,8 +22,9 @@ public class Calculator {
         "0", ".", "√", "="
     };
 
-    String[] rightSymbols = {"÷","×","-","+","="};
+    String[] rightSymbols = {"÷", "×", "-", "+", "="};
     String[] topSymbols = {"AC", "+/-", "%"};
+
 
     JFrame frame = new JFrame("Calculator");
     JLabel displayLabel = new JLabel();
@@ -60,7 +61,51 @@ public class Calculator {
             String buttonValue = buttonsValues[i];
             button.setFont(new Font("Arial", Font.PLAIN,30));
             button.setText(buttonValue);
-            buttonsPanel.add((button));
+            button.setFocusable(false);
+            button.setBorder(new LineBorder(customBlack));
+
+            if (Arrays.asList(topSymbols).contains(buttonValue)) {
+                button.setBackground(customLightGray);
+                button.setForeground(customBlack);
+            }
+            else if (Arrays.asList(rightSymbols).contains(buttonValue)){
+                button.setBackground(customOrange);
+                button.setForeground(Color.white);
+            }
+            else {
+                button.setBackground(customDarkGray);
+                button.setForeground(Color.white);
+            }
+
+            buttonsPanel.add(button);
+
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed (ActionEvent e){
+                    JButton button = (JButton) e.getSource();
+                    String buttonValue = button.getText();
+                    if (Arrays.asList(rightSymbols).contains(buttonValue)){
+
+                    }
+                    else if (Arrays.asList(topSymbols).contains(buttonValue)){
+
+                    }
+                    else {
+                        if (buttonValue == ".") {
+                            if (!displayLabel.getText().contains(buttonValue)) {
+                                displayLabel.setText(displayLabel.getText()+buttonValue);
+                            }
+                        }
+                        else if ("0123456789".contains(buttonValue)) {
+                            if (displayLabel.getText()=="0"){
+                                displayLabel.setText((buttonValue));
+                            }
+                            else  {
+                                displayLabel.setText(displayLabel.getText()+  buttonValue);
+                            }
+                        }
+                    }
+                }
+            });
         }
     }
 }   
