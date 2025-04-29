@@ -9,6 +9,8 @@ public class Calculator {
     int winWidth = 360;
     int winHeight = 540;
 
+    JFrame frame = new JFrame("Calculator");  // A windows desktop frame application
+
     Color customLightGray = new Color(212,212,210);
     Color customDarkGray = new Color(80,80,80);
     Color customBlack = new Color(28,28,28);
@@ -25,8 +27,14 @@ public class Calculator {
     String[] rightSymbols = {"÷", "×", "-", "+", "="};
     String[] topSymbols = {"AC", "+/-", "%"};
 
+    // A+B, A-B, A*B, A/B
+    String A = "0";
+    String operator = null;
+    String B = null;
 
-    JFrame frame = new JFrame("Calculator");
+
+
+  
     JLabel displayLabel = new JLabel();
     JPanel displayPanel = new JPanel();
     JPanel buttonsPanel = new JPanel();
@@ -84,10 +92,27 @@ public class Calculator {
                     JButton button = (JButton) e.getSource();
                     String buttonValue = button.getText();
                     if (Arrays.asList(rightSymbols).contains(buttonValue)){
-
+                        if (buttonValue == "") {
+                            
+                        } else {
+                            
+                        }
                     }
                     else if (Arrays.asList(topSymbols).contains(buttonValue)){
-
+                        if (buttonValue == "AC") {
+                            clearAll();
+                            displayLabel.setText("0");
+                        }
+                        else if (buttonValue == "+/-"){
+                            double numDisplay = Double.parseDouble(displayLabel.getText());
+                            numDisplay *=  -1;
+                            displayLabel.setText(removeZeroDecimal(numDisplay));
+                        }
+                        else if (buttonValue == "%"){
+                            double numDisplay = Double.parseDouble(displayLabel.getText());
+                            numDisplay /= 100;
+                            displayLabel.setText(removeZeroDecimal(numDisplay));
+                        }
                     }
                     else {
                         if (buttonValue == ".") {
@@ -107,5 +132,18 @@ public class Calculator {
                 }
             });
         }
+    }
+
+    void clearAll(){
+        A = "0";
+        operator= null;
+        B = null;
+    }
+
+    String removeZeroDecimal(double numDisplay){
+        if (numDisplay % 1 == 0) {
+            return Integer.toString((int)  numDisplay);
+        }
+        return Double.toString(numDisplay);
     }
 }   
